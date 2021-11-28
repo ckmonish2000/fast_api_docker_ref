@@ -1,4 +1,6 @@
 from fastapi import FastAPI
+from pydantic import BaseModel
+from typing import Optional
 
 app = FastAPI()
 
@@ -6,14 +8,31 @@ app = FastAPI()
 async def root():
   return {"message":"hello world"}
 
+# string parameter
 
 @app.get('/posts/{item}')
-async def root(item : int):
+async def root2(item : int):
   return {"message":item}
 
 
-# body 
+
+# query parameter
 
 @app.post('/posts')
-async def root(obj):
+async def root4(obj):
   return {"message":obj}
+
+
+# body data
+
+# json model
+class Item(BaseModel):
+    name: str
+    description: Optional[str] = None
+    price: float
+    tax: Optional[float] = None
+
+
+@app.post('/body')
+async def root3(obj:Item):
+  return obj
