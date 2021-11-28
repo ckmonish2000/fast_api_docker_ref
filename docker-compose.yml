@@ -3,8 +3,16 @@ version: '3'
 services:
   backend: 
     build: .
+    volumes:
+      - ./:/app
     ports:
       - 5001:8000
-  
+  frontend:
+    build: ./client
+    volumes:
+      - ./client/src:/app/src
+    ports:
+      - 3001:3000
+    
 
 
